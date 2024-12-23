@@ -1,6 +1,6 @@
 class CopyManga extends ComicSource {
 
-    name = "拷贝漫画"
+    name = "漫画本1"
 
     key = "copy_manga"
 
