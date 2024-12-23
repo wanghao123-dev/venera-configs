@@ -1,7 +1,7 @@
 class Komiic extends ComicSource {
 
     // 此漫画源的名称
-    name = "Komiic"
+    name = "漫画本2"
 
     // 唯一标识符
     key = "Komiic"
@@ -140,7 +140,7 @@ class Komiic extends ComicSource {
         {
             /// 标题
             /// 标题同时用作标识符, 不能重复
-            title: "Komiic",
+            title: "漫画本2",
 
             /// singlePageWithMultiPart 或者 multiPageComicList
             type: "multiPageComicList",
@@ -152,7 +152,7 @@ class Komiic extends ComicSource {
     ]
 
     category = {
-        title: "Komiic",
+        title: "漫画本2",
         enableRankingPage: true,
         parts: [
             {
