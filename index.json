@@ -1,56 +1,26 @@
 [
     {
-        "name": "拷贝漫画",
+        "name": "漫画本1",
         "fileName": "copy_manga.js",
         "key": "copy_manga",
         "version": "1.0.2"
     },
     {
-        "name": "Komiic",
+        "name": "漫画本2",
         "fileName": "komiic.js",
         "key": "Komiic",
         "version": "1.0.0"
     },
     {
-        "name": "爱看漫",
+        "name": "漫画本3",
         "fileName": "ikmmh.js",
         "key": "ikmmh",
         "version": "1.0.0"
     },
     {
-        "name": "包子漫画",
+        "name": "漫画本4",
         "fileName": "baozi.js",
         "key": "baozi",
         "version": "1.0.1"
-    },
-    {
-        "name": "Picacg",
-        "fileName": "picacg.js",
-        "key": "picacg",
-        "version": "1.0.0"
-    },
-    {
-        "name": "nhentai",
-        "fileName": "nhentai.js",
-        "key": "nhentai",
-        "version": "1.0.3"
-    },
-    {
-        "name": "紳士漫畫",
-        "fileName": "wnacg.js",
-        "key": "wnacg",
-        "version": "1.0.2"
-    },
-    {
-        "name": "ehentai",
-        "fileName": "ehentai.js",
-        "key": "ehentai",
-        "version": "1.1.1"
-    },
-    {
-        "name": "禁漫天堂",
-        "fileName": "jm.js",
-        "key": "jm",
-        "version": "1.0.0"
     }
 ]
