@@ -1,6 +1,6 @@
 class Baozi extends ComicSource {
     // 此漫画源的名称
-    name = "包子漫画"
+    name = "漫画本4"
 
     // 唯一标识符
     key = "baozi"
@@ -81,7 +81,7 @@ class Baozi extends ComicSource {
         {
             /// 标题
             /// 标题同时用作标识符, 不能重复
-            title: "包子漫画",
+            title: "漫画本4",
 
             /// singlePageWithMultiPart 或者 multiPageComicList
             type: "singlePageWithMultiPart",
@@ -110,7 +110,7 @@ class Baozi extends ComicSource {
     /// 一个漫画源只能有一个分类页面, 也可以没有, 设置为null禁用分类页面
     category = {
         /// 标题, 同时为标识符, 不能与其他漫画源的分类页面重复
-        title: "包子漫画",
+        title: "漫画本4",
         parts: [
             {
                 name: "类型",
