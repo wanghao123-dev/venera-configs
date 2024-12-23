@@ -79,7 +79,7 @@ class CopyManga extends ComicSource {
     /// explore pages
     explore = [
         {
-            title: "拷贝漫画",
+            title: "漫画本1",
             type: "singlePageWithMultiPart",
             load: async () => {
                 let dataStr = await Network.get(
@@ -131,7 +131,7 @@ class CopyManga extends ComicSource {
     ]
 
     category = {
-        title: "拷贝漫画",
+        title: "漫画本1",
         parts: [
             {
                 name: "主题",
