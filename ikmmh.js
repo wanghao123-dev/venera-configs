@@ -1,7 +1,7 @@
 class NewComicSource extends ComicSource {  // 首行必须为class...
 
     // 此漫画源的名称
-    name = "爱看漫"
+    name = "漫画本3"
 
     // 唯一标识符
     key = "ikmmh"
@@ -137,7 +137,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
     /// 一个漫画源只能有一个分类页面, 也可以没有, 设置为null禁用分类页面
     category = {
         /// 标题, 同时为标识符, 不能与其他漫画源的分类页面重复
-        title: "爱看漫",
+        title: "漫画本3",
         parts: [
             {
                 name: "分类",
