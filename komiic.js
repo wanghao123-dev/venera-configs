@@ -173,7 +173,7 @@ class Komiic extends ComicSource {
     /// 分类漫画页面, 即点击分类标签后进入的页面
     categoryComics = {
         load: async (category, param, options, page) => {
-            return await this.queryComics({ "operationName": "comicByCategory", "variables": { "categoryId": param, "pagination": { "limit": 30, "offset": (page - 1) * 30, "orderBy": options[0], "asc": false, "status": options[1] } }, "query": "query comicByCategory($categoryId: ID!, $pagination: Pagination!) {\n  comicByCategory(categoryId: $categoryId, pagination: $pagination) {\n    id\n    title\n    status\n    year\n    imageUrl\n    authors {\n      id\n      name\n      __typename\n    }\n    categories {\n      id\n      name\n      __typename\n    }\n    dateUpdated\n    monthViews\n    views\n    favoriteCount\n    lastBookUpdate\n    lastChapterUpdate\n    __typename\n  }\n}" })
+            return await this.queryComics({ "operationName": "comicByCategories", "variables": { "categoryId": param, "pagination": { "limit": 30, "offset": (page - 1) * 30, "orderBy": options[0], "asc": false, "status": options[1] } }, "query": "query comicByCategories($categoryId: ID!, $pagination: Pagination!) {\n  comicByCategories(categoryId: $categoryId, pagination: $pagination) {\n    id\n    title\n    status\n    year\n    imageUrl\n    authors {\n      id\n      name\n      __typename\n    }\n    categories {\n      id\n      name\n      __typename\n    }\n    dateUpdated\n    monthViews\n    views\n    favoriteCount\n    lastBookUpdate\n    lastChapterUpdate\n    __typename\n  }\n}" })
         },
         // 提供选项
         optionList: [
