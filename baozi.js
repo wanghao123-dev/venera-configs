@@ -302,7 +302,7 @@ class Baozi extends ComicSource {
         },
         // 获取章节图片
         loadEp: async (comicId, epId) => {
-            let res = await Network.get(`https://${this.lang}.czmanga.com/comic/chapter/${comicId}/0_${epId}.html`)
+            let res = await Network.get(`https://${this.lang}.dzmanga.com/comic/chapter/${comicId}/0_${epId}.html`)
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
             }
