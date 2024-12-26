@@ -94,7 +94,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             ```
             */
             load: async () => {
-                let res = await Network.get("https://ymcdnyfqdapp.ikmmh.com/list/", {
+                let res = await Network.get("https://ymcdnyfqdapp.ikmmh.com/lists/", {
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
                 })
                 if (res.status !== 200) {
