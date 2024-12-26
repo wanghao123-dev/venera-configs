@@ -103,7 +103,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 let document = new HtmlDocument(res.body)
                 function parseComicDom(comicDom) {
                     let title = comicDom.querySelector("p.title").text
-                    let cover = comicDom.querySelector("img").attributes("src")
+                    let cover = comicDom.querySelector("img").attributes["src"]
                     let tags = []
                     // let tagDoms = comicDom.querySelectorAll("div.tag-wrap > p")
                     // for (let j = 0; j < tagDoms.length; j++) {
@@ -113,7 +113,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                     // for (let j = 0; j < tagDoms.length; j++) {
                     //     tags.push(tagDoms[j].text.trim())
                     // }
-                    let link = comicDom.querySelector("a").attributes("href")
+                    let link = comicDom.querySelector("a").attributes["href"]
                     link = "https://ymcdnyfqdapp.ikmmh.com" + link
                     return {
                         title: title,
