@@ -95,7 +95,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             */
             load: async () => {
                 let res = await Network.get("https://ymcdnyfqdapp.ikmmh.com/", {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
                 })
                 if (res.status !== 200) {
                     throw "Invalid status code: " + res.status
@@ -178,7 +178,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 url = `https://ymcdnyfqdapp.ikmmh.com/booklists/${options[1]}/${category}/${options[0]}/${page}.html`
             }
             let res = await Network.get(url, {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
             })
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
@@ -252,7 +252,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
     search = {
         load: async (keyword, options, page) => {
             let res = await Network.get(`https://ymcdnyfqdapp.ikmmh.com/search?searchkey=${encodeURIComponent(keyword)}`, {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
             })
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
@@ -292,7 +292,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let id = comicId.split("/")[4]
             if (isAdding) {
                 let comicInfoRes = await Network.get(comicId, {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
                 });
                 if (comicInfoRes.status !== 200) {
                     throw "Invalid status code: " + res.status
@@ -316,7 +316,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             } else {
                 let res = await Network.post("https://ymcdnyfqdapp.ikmmh.com/api/user/bookcase/del", {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
                 }, `articleid=${id}`)
                 if (res.status !== 200) {
                     error("Invalid status code: " + res.status)
@@ -336,7 +336,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
         loadComics: async (page, folder) => {
             let res = await Network.post("https://ymcdnyfqdapp.ikmmh.com/api/user/bookcase/ajax", {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
             }, `page=${page}`)
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
@@ -369,7 +369,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
         // 加载漫画信息
         loadInfo: async (id) => {
             let res = await Network.get(id, {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
             })
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
@@ -420,7 +420,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 `https://ymcdnyfqdapp.ikmmh.com/chapter/${comicId}/${epId}.html`,
                 {
                     "Referer": `https://ymcdnyfqdapp.ikmmh.com/book/${comicId}.html`,
-                    "User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-G9600) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.181 Mobile Safari/537.36"
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
                 }
             )
             if (res.status !== 200) {
