@@ -94,7 +94,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             ```
             */
             load: async () => {
-                let res = await Network.get("https://ymcdnyfqdapp.ikmmh.com/", {
+                let res = await Network.get("https://ymcdnyfqdapp.ikmmh.com/list/", {
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
                 })
                 if (res.status !== 200) {
@@ -102,17 +102,17 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 }
                 let document = new HtmlDocument(res.body)
                 function parseComicDom(comicDom) {
-                    let title = comicDom.querySelector("h4").text
+                    let title = comicDom.querySelector("p.title").text
                     let cover = comicDom.querySelector("img").attributes["data-src"]
                     let tags = []
-                    let tagDoms = comicDom.querySelectorAll("div.tag-wrap > p")
-                    for (let j = 0; j < tagDoms.length; j++) {
-                        tags.push(tagDoms[j].text.trim())
-                    }
-                    tagDoms = comicDom.querySelectorAll("div.anime-mask > p")
-                    for (let j = 0; j < tagDoms.length; j++) {
-                        tags.push(tagDoms[j].text.trim())
-                    }
+                    // let tagDoms = comicDom.querySelectorAll("div.tag-wrap > p")
+                    // for (let j = 0; j < tagDoms.length; j++) {
+                    //     tags.push(tagDoms[j].text.trim())
+                    // }
+                    // tagDoms = comicDom.querySelectorAll("div.anime-mask > p")
+                    // for (let j = 0; j < tagDoms.length; j++) {
+                    //     tags.push(tagDoms[j].text.trim())
+                    // }
                     let link = comicDom.querySelector("a").attributes["href"]
                     link = "https://ymcdnyfqdapp.ikmmh.com" + link
                     return {
@@ -124,8 +124,8 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 }
 
                 let data = {
-                    "海量精品漫画": document.querySelectorAll("ul.panel-comic-r > li").map(parseComicDom),
-                    "热门人气新番": document.querySelectorAll("ul.list-anime > li").map(parseComicDom),
+                    "海量精品漫画": document.querySelectorAll("ul.comic-sort > li").map(parseComicDom),
+                    "热门人气新番": document.querySelectorAll("ul.comic-sort > li").map(parseComicDom),
                 }
                 
                 return data
