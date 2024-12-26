@@ -375,29 +375,35 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 throw "Invalid status code: " + res.status
             }
             let document = new HtmlDocument(res.body)
-            let title = document.querySelector("h1.detail-title").text
-            let cover = document.querySelector("div.banner-img > img").attributes["data-src"]
-            let author = document.querySelector("p.author").text
-            let tags = document.querySelectorAll("p.ui-tag > a").map(e => e.text.trim())
-            let description = document.querySelector("div.detail-desc").text
-            let updateTime = document.querySelector("div.detail-info > div > span > b").text
-            let eps = {}
-            document.querySelectorAll("ol.chapter-list > li").forEach(element => {
-                let title = element.querySelector("a").attributes["title"]
-                let id = element.attributes["data-chapter"]
-                eps[id] = title
-            })
-            let comics = document.querySelectorAll("div.mod-vitem-comic").map(element => {
-                let title = element.querySelector("h4").text
-                let cover = element.querySelector("img").attributes["data-src"]
-                let link = element.querySelector("a").attributes["href"]
-                link = "https://ymcdnyfqdapp.ikmmh.com" + link
-                return {
-                    title: title,
-                    cover: cover,
-                    id: link
-                }
-            })
+            let title = document.querySelector("div.book-hero__detail > .title").text
+            let cover = ''
+            let author = document.querySelector("div.book-container__author").text
+            let tags = document.querySelectorAll("div.tags > a").map(e => e.text.trim())
+            let description = document.querySelector(".book-container__detail").text
+            let updateTime = ''
+            // let title = document.querySelector("h1.detail-title").text
+            // let cover = document.querySelector("div.banner-img > img").attributes["data-src"]
+            // let author = document.querySelector("p.author").text
+            // let tags = document.querySelectorAll("p.ui-tag > a").map(e => e.text.trim())
+            // let description = document.querySelector("div.detail-desc").text
+            // let updateTime = document.querySelector("div.detail-info > div > span > b").text
+            // let eps = {}
+            // document.querySelectorAll("ol.chapter-list > li").forEach(element => {
+            //     let title = element.querySelector("a").attributes["title"]
+            //     let id = element.attributes["data-chapter"]
+            //     eps[id] = title
+            // })
+            // let comics = document.querySelectorAll("div.mod-vitem-comic").map(element => {
+            //     let title = element.querySelector("h4").text
+            //     let cover = element.querySelector("img").attributes["data-src"]
+            //     let link = element.querySelector("a").attributes["href"]
+            //     link = "https://ymcdnyfqdapp.ikmmh.com" + link
+            //     return {
+            //         title: title,
+            //         cover: cover,
+            //         id: link
+            //     }
+            // })
             return {
                 title: title,
                 cover: cover,
@@ -407,8 +413,8 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                     "更新": [updateTime],
                     "标签": tags
                 },
-                chapters: eps,
-                suggestions: comics
+                chapters: {},
+                suggestions: []
             }
         },
         // 获取章节图片
