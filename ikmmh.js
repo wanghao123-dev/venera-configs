@@ -124,8 +124,8 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 }
 
                 let data = {
-                    "海量精品漫画": document.querySelectorAll("ul.comic-sort > li").map(parseComicDom),
-                    "热门人气新番": document.querySelectorAll("ul.comic-sort > li").map(parseComicDom),
+                    "海量精品漫画": [...document.querySelectorAll("ul.comic-sort > li")].map(parseComicDom),
+                    "热门人气新番": [...document.querySelectorAll("ul.comic-sort > li")].map(parseComicDom),
                 }
                 
                 return data
