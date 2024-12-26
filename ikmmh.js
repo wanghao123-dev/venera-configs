@@ -376,25 +376,12 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             }
             let document = new HtmlDocument(res.body)
             let title = document.querySelector("div.book-hero__detail > .title").text
-            let cover = ''
-            // 查询目标元素
-            let coverImgElement = document.querySelector('.comicThumb_back .coverimg')
-            // 提取背景图 URL
-            if (coverImgElement) {
-                let style = coverImgElement.attributes["style"]
-                if (style) {
-                    // 提取 background-image 的值
-                    let backgroundImage = style.match(/background-image:\s*url$['"]?(.*?)['"]?$/i)
-                    if (backgroundImage && backgroundImage[1]) {
-                        let imageUrl = backgroundImage[1]
-                        cover = imageUrl
-                    }
-                }
-            } 
+            let cover = document.querySelector('meta[property="og:image"]').attributes["content"]
             let author = document.querySelector("div.book-container__author").text
             let tags = document.querySelectorAll("div.tags > a").map(e => e.text.trim())
             let description = document.querySelector(".book-container__detail").text
-            let updateTime = ''
+            let updateTime = document.querySelector('meta[property="og:cartoon:update_time"]').attributes["content"]
+
             // let title = document.querySelector("h1.detail-title").text
             // let cover = document.querySelector("div.banner-img > img").attributes["data-src"]
             // let author = document.querySelector("p.author").text
