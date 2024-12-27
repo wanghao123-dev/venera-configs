@@ -200,10 +200,10 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 };
             }
             let query = 'ul.comic-sort > li'
-            if (param === undefined || param === null) {
+            if (param !== undefined && param !== null) {
                 query = 'ul.update-list > li'
             }
-            let maxPage = 1
+            let maxPage = null
             return {
                 comics: document.querySelectorAll(query).map(parseComic),
                 maxPage: maxPage
