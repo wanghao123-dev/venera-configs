@@ -382,6 +382,15 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let description = document.querySelector(".book-container__detail").text
             let updateTime = document.querySelector('meta[property="og:cartoon:update_time"]').attributes["content"]
 
+            let chapterRes = await Network.get('https://ymcdnyfqdapp.ikmmh.com/api/comic/zyz/chapters?ph=1&tempid=3&zpid=4131&page=0&line=48&orderby=asc', {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+            })
+
+            let eps = {}
+            JSON.parse(chapterRes.body).length.forEach(element => {
+                eps[element.url] = element.name
+            })
+
             // let title = document.querySelector("h1.detail-title").text
             // let cover = document.querySelector("div.banner-img > img").attributes["data-src"]
             // let author = document.querySelector("p.author").text
