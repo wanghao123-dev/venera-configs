@@ -383,15 +383,8 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let updateTime = document.querySelector('meta[property="og:cartoon:update_time"]').attributes["content"]
 
              function extractIdFromUrl(url) {
-                // 创建一个URL对象，用于安全地解析URL
-                const parsedUrl = new URL(url);
-                
-                // 获取URL路径部分
-                const path = parsedUrl.pathname;
-                
-                // 使用正则表达式匹配路径中的最后一个数字序列
-                const match = path.match(/\/(\d+)\/?$/);
-                
+                 // 使用正则表达式直接从URL字符串中匹配最后一个数字序列
+                const match = url.match(/\/(\d+)\/?$/);
                 // 如果匹配成功，则返回匹配到的数字，否则返回null
                 return match ? match[1] : null;
             }
