@@ -186,10 +186,10 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let document = new HtmlDocument(res.body)
 
             function parseComic(element) {
-                let title = comicDom.querySelector("p.title").text
-                let cover = comicDom.querySelector("img").attributes["src"]
+                let title = element.querySelector("p.title").text
+                let cover = element.querySelector("img").attributes["src"]
                 let tags = []
-                let link = comicDom.querySelector("a").attributes["href"]
+                let link = element.querySelector("a").attributes["href"]
                 link = "https://ymcdnyfqdapp.ikmmh.com" + link
                 let updateInfo = element.querySelector("span.chapter").text
                 return {
