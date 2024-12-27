@@ -383,7 +383,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let updateTime = document.querySelector('meta[property="og:cartoon:update_time"]').attributes["content"]
 
             let chapterRes = await Network.get('https://ymcdnyfqdapp.ikmmh.com/api/comic/zyz/chapters?ph=1&tempid=3&zpid=4131&page=0&line=48&orderby=asc', {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
             })
 
             let eps = {}
