@@ -124,7 +124,6 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 }
 
                 let data = {
-                    "海量精品漫画": document.querySelectorAll("ul.comic-sort > li").map(parseComicDom),
                     "热门人气新番": document.querySelectorAll("ul.comic-sort > li").map(parseComicDom),
                 }
                 
@@ -200,14 +199,13 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                     subTitle: updateInfo
                 };
             }
-
-            let maxPage = 1
-            // if (param === undefined || param === null) {
-            //     maxPage = document.querySelectorAll("ul.list-page > li > a").pop().text
-            //     maxPage = parseInt(maxPage)
-            // }
+            let query = 'ul.comic-sort > li'
+            if (param === undefined || param === null) {
+                query = 'ul.update-list > li'
+            }
+            let maxPage = null
             return {
-                comics: document.querySelectorAll("ul.comic-sort > li").map(parseComic),
+                comics: document.querySelectorAll(query).map(parseComic),
                 maxPage: maxPage
             }
         },
