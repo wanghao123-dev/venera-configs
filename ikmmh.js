@@ -389,10 +389,11 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let eps = {}
             let chaData = JSON.parse(chapterRes.body)
             console.log("=======")
-            console.log(chaData.length)
-            // chaData["length"].forEach(element => {
-            //     eps[element.url] = element.name
-            // })
+            chaData.length.forEach((element) => {
+                console.log("+++++")
+                console.log(element)
+                eps[element.url] = element.name
+            })
         
 
             // let title = document.querySelector("h1.detail-title").text
