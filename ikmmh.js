@@ -371,7 +371,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let document = new HtmlDocument(res.body)
             let title = document.querySelector("div.book-hero__detail > .title").text
             let cover = document.querySelector('meta[property="og:image"]').attributes["content"]
-            let author = document.querySelector('meta[property=""og:cartoon:author"]').attributes["content"]
+            let author = document.querySelector('meta[property="og:cartoon:author"]').attributes["content"]
             let tags = document.querySelectorAll("div.tags > a").map(e => e.text.trim())
             let description = document.querySelector(".book-container__detail").text
             let updateTime = document.querySelector('meta[property="og:cartoon:update_time"]').attributes["content"]
