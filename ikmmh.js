@@ -186,16 +186,12 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let document = new HtmlDocument(res.body)
 
             function parseComic(element) {
-                let title = element.querySelector("h2").text
-                let cover = element.querySelector("img").attributes["data-src"]
+                let title = comicDom.querySelector("p.title").text
+                let cover = comicDom.querySelector("img").attributes["src"]
                 let tags = []
-                let tagDoms = element.querySelectorAll("div.tag-list > p")
-                for (let j = 0; j < tagDoms.length; j++) {
-                    tags.push(tagDoms[j].text.trim())
-                }
-                let link = element.querySelector("a").attributes["href"]
+                let link = comicDom.querySelector("a").attributes["href"]
                 link = "https://ymcdnyfqdapp.ikmmh.com" + link
-                let updateInfo = element.querySelector("p.process").text
+                let updateInfo = element.querySelector("span.chapter").text
                 return {
                     title: title,
                     cover: cover,
@@ -206,12 +202,12 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             }
 
             let maxPage = 1
-            if (param === undefined || param === null) {
-                maxPage = document.querySelectorAll("ul.list-page > li > a").pop().text
-                maxPage = parseInt(maxPage)
-            }
+            // if (param === undefined || param === null) {
+            //     maxPage = document.querySelectorAll("ul.list-page > li > a").pop().text
+            //     maxPage = parseInt(maxPage)
+            // }
             return {
-                comics: document.querySelectorAll("ul.list-comic-book > li").map(parseComic),
+                comics: document.querySelectorAll("ul.comic-sort > li").map(parseComic),
                 maxPage: maxPage
             }
         },
