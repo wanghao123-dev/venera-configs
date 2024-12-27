@@ -392,7 +392,8 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 eps[element.url] = element.name
             })
             console.log("=======")
-            console.log(chaData)
+            console.log(chaData.length)
+            console.log(Json.parse(chapterRes.body).length)
 
             // let title = document.querySelector("h1.detail-title").text
             // let cover = document.querySelector("div.banner-img > img").attributes["data-src"]
