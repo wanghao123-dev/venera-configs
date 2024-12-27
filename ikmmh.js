@@ -256,11 +256,11 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let document = new HtmlDocument(res.body)
 
             function parseComic(element) {
-                let title = element.querySelector("a").text
-                let cover = element.querySelector("img").attributes["data-src"]
+                let title = element.querySelector("p.title").text
+                let cover = element.querySelector("img").attributes["src"]
                 let link = element.querySelector("a").attributes["href"]
                 link = "https://ymcdnyfqdapp.ikmmh.com" + link
-                let updateInfo = element.querySelector("p.describe > a").text
+                let updateInfo = element.querySelector("span.chapter").text
                 return {
                     title: title,
                     cover: cover,
@@ -270,7 +270,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             }
 
             return {
-                comics: document.querySelectorAll("div.classification").map(parseComic),
+                comics: document.querySelectorAll("ul.comic-sort > li").map(parseComic),
                 maxPage: 1
             }
         },
