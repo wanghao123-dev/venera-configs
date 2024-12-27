@@ -387,26 +387,11 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let chapterRes = await Network.get(`https://ymcdnyfqdapp.ikmmh.com/api/comic/zyz/chapters?ph=1&tempid=3&zpid=${zpid}&page=0&line=48&orderby=asc`, {
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
             })
-
             let eps = {}
             let chaData = JSON.parse(chapterRes.body)
             chaData.length.forEach((element) => {
                 eps[element.url] = element.name
             })
-        
-
-            // let title = document.querySelector("h1.detail-title").text
-            // let cover = document.querySelector("div.banner-img > img").attributes["data-src"]
-            // let author = document.querySelector("p.author").text
-            // let tags = document.querySelectorAll("p.ui-tag > a").map(e => e.text.trim())
-            // let description = document.querySelector("div.detail-desc").text
-            // let updateTime = document.querySelector("div.detail-info > div > span > b").text
-            // let eps = {}
-            // document.querySelectorAll("ol.chapter-list > li").forEach(element => {
-            //     let title = element.querySelector("a").attributes["title"]
-            //     let id = element.attributes["data-chapter"]
-            //     eps[id] = title
-            // })
             let comics = document.querySelectorAll("div.module-guessu > div.item").map(element => {
                 let title = element.querySelector("div.title").text
                 let cover = element.querySelector("div.lazy").attributes["data-src"]
@@ -428,7 +413,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                     "标签": tags
                 },
                 chapters: eps,
-                suggestions: comics
+                recommend: comics
             }
         },
         // 获取章节图片
