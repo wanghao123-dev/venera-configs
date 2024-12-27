@@ -382,7 +382,22 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let description = document.querySelector(".book-container__detail").text
             let updateTime = document.querySelector('meta[property="og:cartoon:update_time"]').attributes["content"]
 
-            let chapterRes = await Network.get('https://ymcdnyfqdapp.ikmmh.com/api/comic/zyz/chapters?ph=1&tempid=3&zpid=4131&page=0&line=48&orderby=asc', {
+             function extractIdFromUrl(url) {
+                // 创建一个URL对象，用于安全地解析URL
+                const parsedUrl = new URL(url);
+                
+                // 获取URL路径部分
+                const path = parsedUrl.pathname;
+                
+                // 使用正则表达式匹配路径中的最后一个数字序列
+                const match = path.match(/\/(\d+)\/?$/);
+                
+                // 如果匹配成功，则返回匹配到的数字，否则返回null
+                return match ? match[1] : null;
+            }
+            const zpid = extractIdFromUrl(id);
+            
+            let chapterRes = await Network.get(`https://ymcdnyfqdapp.ikmmh.com/api/comic/zyz/chapters?ph=1&tempid=3&zpid=${zpid}&page=0&line=48&orderby=asc`, {
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
             })
 
