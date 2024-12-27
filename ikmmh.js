@@ -407,7 +407,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             //     let id = element.attributes["data-chapter"]
             //     eps[id] = title
             // })
-            let comics = document.querySelectorAll("div.module-guessu").map(element => {
+            let comics = document.querySelectorAll("div.module-guessu > div.item").map(element => {
                 let title = element.querySelector("div.title").text
                 let cover = element.querySelector("div.lazy").attributes["data-src"]
                 let link = element.querySelector("a").attributes["href"]
