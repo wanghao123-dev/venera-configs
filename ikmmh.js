@@ -407,17 +407,17 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             //     let id = element.attributes["data-chapter"]
             //     eps[id] = title
             // })
-            // let comics = document.querySelectorAll("div.mod-vitem-comic").map(element => {
-            //     let title = element.querySelector("h4").text
-            //     let cover = element.querySelector("img").attributes["data-src"]
-            //     let link = element.querySelector("a").attributes["href"]
-            //     link = "https://ymcdnyfqdapp.ikmmh.com" + link
-            //     return {
-            //         title: title,
-            //         cover: cover,
-            //         id: link
-            //     }
-            // })
+            let comics = document.querySelectorAll("div.module-guessu").map(element => {
+                let title = element.querySelector("div.title").text
+                let cover = element.querySelector("div.lazy").attributes["data-src"]
+                let link = element.querySelector("a").attributes["href"]
+                link = "https://ymcdnyfqdapp.ikmmh.com" + link
+                return {
+                    title: title,
+                    cover: cover,
+                    id: link
+                }
+            })
             return {
                 title: title,
                 cover: cover,
@@ -428,7 +428,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                     "标签": tags
                 },
                 chapters: eps,
-                suggestions: []
+                suggestions: comics
             }
         },
         // 获取章节图片
