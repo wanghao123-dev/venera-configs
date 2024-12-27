@@ -203,7 +203,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             if (param === undefined || param === null) {
                 query = 'ul.update-list > li'
             }
-            let maxPage = null
+            let maxPage = 1
             return {
                 comics: document.querySelectorAll(query).map(parseComic),
                 maxPage: maxPage
