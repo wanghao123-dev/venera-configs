@@ -339,22 +339,17 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             }
             let document = new HtmlDocument(res.body)
 
+            let title = document.querySelector('meta[property="og:comic:book_name"]').attributes["content"]
+            let tags = document.querySelectorAll('meta[property="og:comic:category"]').attributes["content"].split(" ")
+            let updateTime = document.querySelector('meta[property="og:comic:update_time"]').attributes["content"]
+            let description = document.querySelector('meta[property="og:description"]').attributes["content"]
+        
             let dataInfo =  document.querySelector('dl.fed-deta-info')
-            let title = dataInfo.querySelector("h1").text.trim()
             let cover = dataInfo.querySelector("a.fed-list-pics").attributes["data-original"]
-            let description = dataInfo.querySelector("dd > li > div.fed-part-esan").text.trim()
 
-            let allLi = dataInfo.querySelectorAll("dd.fed-deta-content > li")
-            let author = allLi[2].querySelector('a').text.trim()
-            let updateTime = allLi[3].querySelector('a').text.trim()
-            let tags = allLi[5].querySelectorAll("a").map(e => e.text.trim())
-
-            let eps = {}
-            let chaData = document.querySelectorAll("div.all_data_list > li")
-            chaData.forEach((element) => {
-                let cha = element.querySelector('a')
-                eps[cha.attributes["href"]] = cha.text.trim()
-            })
+            let allLi = dataInfo.querySelectorAll("dd.fed-deta-content li")
+            let authorLi = allLi.find( e =>  e.querySelector('span').textContent == '作者')
+            let author =  authorLi ? authorLi.querySelector('a').text : ''
             
             let comics = document.querySelectorAll(".fed-part-layout > ul.fed-list-info > li").map(element => {
                 let title = element.querySelector("a.fed-list-title").text
