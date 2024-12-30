@@ -351,6 +351,13 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let authorLi = allLi.find( e =>  e.querySelector('span').textContent == '作者')
             let author =  authorLi ? authorLi.querySelector('a').text : ''
             
+            let eps = {}
+            let chaData = document.querySelectorAll("div.all_data_list li")
+            chaData.forEach((element) => {
+                let cha = element.querySelector('a')
+                eps[cha.attributes["href"]] = cha.text.trim()
+            })
+            
             let comics = document.querySelectorAll(".fed-part-layout > ul.fed-list-info > li").map(element => {
                 let title = element.querySelector("a.fed-list-title").text
                 let cover = element.querySelector("a.fed-list-pics").attributes["data-original"]
