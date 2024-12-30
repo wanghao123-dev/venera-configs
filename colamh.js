@@ -58,13 +58,12 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
 
     parseComic(e) {
         let url = e.querySelector("a").attributes['href']
-        let id = url.split("/").pop()
         let title = e.querySelector("a.fed-list-title").text.trim()
         let cover = e.querySelector("a.fed-list-pics").attributes["data-original"]
         let tags =  []
         let description = e.querySelector("span.fed-list-remarks").text.trim()
         return {
-            id: id,
+            id: url,
             title: title,
             cover: cover,
             tags: tags,
@@ -162,7 +161,6 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 let cover = element.querySelector("img").attributes["src"]
                 let tags = []
                 let link = element.querySelector("a").attributes["href"]
-                link = "${this.baseUrl}" + link
                 let updateInfo = element.querySelector("span.chapter").text
                 return {
                     title: title,
@@ -229,11 +227,10 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
 
             function parseComic(e) {
                 let url = e.querySelector("a").attributes['href']
-                let id = url.split("/").pop()
                 let title = e.querySelector("h1 > a").text.trim()
                 let cover = e.querySelector("a.fed-list-pics").attributes["data-original"]
                 return {
-                    id: id,
+                    id: url,
                     title: title,
                     cover: cover,
                 }
@@ -334,7 +331,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
     comic = {
         // 加载漫画信息
         loadInfo: async (id) => {
-            let res = await Network.get(id, {
+            let res = await Network.get(this.baseUrl + id, {
                 "User-Agent": this.webUA
             })
             if (res.status !== 200) {
