@@ -24,9 +24,9 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
         /// 登录
         /// 返回任意值表示登录成功
         login: async (account, pwd) => {
-            let res = await Network.post("https://ymcdnyfqdapp.ikmmh.com/api/user/userarr/login", {
+            let res = await Network.post("${this.baseUrl}/api/user/userarr/login", {
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+                "User-Agent": this.webUA
             }, `user=${account}&pass=${pwd}`)
 
             let data = JSON.parse(res.body)
@@ -46,10 +46,14 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             Network.deleteCookies("ymcdnyfqdapp.ikmmh.com")
         },
 
-        registerWebsite: "https://ymcdnyfqdapp.ikmmh.com/user/register/"
+        registerWebsite: "${this.baseUrl}/user/register/"
     }
     get baseUrl(){
         return `https://www.colamanga.com`
+    }
+
+    get webUA() {
+        return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
     }
 
     parseComic(e) {
@@ -80,7 +84,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
 
             load: async () => {
                 let res = await Network.get(this.baseUrl, {
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+                    "User-Agent": this.webUA
                 })
                 if (res.status !== 200) {
                     throw "Invalid status code: " + res.status
@@ -90,7 +94,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 let result = {}
                 for (let part of parts) {
                     let title = part.querySelector("div.fed-list-head > h2").text.trim()
-                    let comics = part.querySelectorAll("ul.fed-list-info").map(e => this.parseComic(e))
+                    let comics = part.querySelectorAll("ul.fed-list-info > li").map(e => this.parseComic(e))
                     if(comics.length > 0) {
                         result[title] = comics
                     }
@@ -98,92 +102,13 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 return result
             }
         },
-        {
-            /// 标题
-            /// 标题同时用作标识符, 不能重复
-            title: this.name,
-
-            /// singlePageWithMultiPart 或者 multiPageComicList
-            type: "singlePageWithMultiPart",
-
-            /*
-            加载漫画
-            如果类型为multiPageComicList, load方法应当接收一个page参数, 并且返回漫画列表
-            ```
-            load: async (page) => {
-                let res = await Network.get("https://example.com")
-
-                if (res.status !== 200) {
-                    throw `Invalid status code: ${res.status}`
-                }
-
-                let data = JSON.parse(res.body)
-
-                function parseComic(comic) {
-                    // ...
-
-                    return {
-                        id: id,
-                        title: title,
-                        subTitle: author,
-                        cover: cover,
-                        tags: tags,
-                        description: description
-                    }
-                }
-
-                return {
-                    comics: data.list.map(parseComic),
-                    maxPage: data.maxPage
-                }
-            }
-            ```
-            */
-            load: async () => {
-                
-                let res = await Network.get("https://www.colamanga.com", {
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
-                })
-                if (res.status !== 200) {
-                    throw "Invalid status code: " + res.status
-                }
-                let document = new HtmlDocument(res.body)
-                function parseComicDom(comicDom) {
-                    let title = comicDom.querySelector("p.title").text
-                    let cover = comicDom.querySelector("img").attributes["src"]
-                    let tags = []
-                    // let tagDoms = comicDom.querySelectorAll("div.tag-wrap > p")
-                    // for (let j = 0; j < tagDoms.length; j++) {
-                    //     tags.push(tagDoms[j].text.trim())
-                    // }
-                    // tagDoms = comicDom.querySelectorAll("div.anime-mask > p")
-                    // for (let j = 0; j < tagDoms.length; j++) {
-                    //     tags.push(tagDoms[j].text.trim())
-                    // }
-                    let link = comicDom.querySelector("a").attributes["href"]
-                    link = "https://ymcdnyfqdapp.ikmmh.com" + link
-                    return {
-                        title: title,
-                        cover: cover,
-                        tags: tags,
-                        id: link
-                    };
-                }
-
-                let data = {
-                    "热门人气新番": document.querySelectorAll("ul.comic-sort > li").map(parseComicDom),
-                }
-                
-                return data
-            }
-        }
     ]
 
     /// 分类页面
     /// 一个漫画源只能有一个分类页面, 也可以没有, 设置为null禁用分类页面
     category = {
         /// 标题, 同时为标识符, 不能与其他漫画源的分类页面重复
-        title: "漫画本3",
+        title: "漫画本5",
         parts: [
             {
                 name: "分类",
@@ -195,7 +120,8 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 // 如果类型为random, 需要提供此字段, 表示同时显示的数量
                 // randomNumber: 5,
 
-                categories: ["全部", "长条", "大女主", "百合", "耽美", "纯爱", "後宫", "韩漫", "奇幻", "轻小说", "生活", "悬疑", "格斗", "搞笑", "伪娘", "竞技", "职场", "萌系", "冒险", "治愈", "都市", "霸总", "神鬼", "侦探", "爱情", "古风", "欢乐向", "科幻", "穿越", "性转换", "校园", "美食", "悬疑", "剧情", "热血", "节操", "励志", "异世界", "历史", "战争", "恐怖", "霸总", "全部", "连载中", "已完结", "全部", "日漫", "港台", "美漫", "国漫", "韩漫", "未分类",],
+                categories: ["全部", "热血", "玄幻", "恋爱", "冒险", "古风", "都市", "穿越", "奇幻", "其他", "搞笑", "少男", "战斗", "重生", "冒险热血", "逆袭", "爆笑", "少年", "后宫", "少女", "系统", "熱血", "动作", "冒險", "校园", "修真", "修仙", "剧情", "大女主", "霸总", "少年热血"],
+                categoryParams: ['', '10023', '10024', '10126', '10210', '10143', '10124', '10129', '10242', '10560', '10122', '10641', '10309', '10461', '11224', '10943', '10201', '10321', '10138', '10301', '10722', '12044', '10125', '12123', '10131', '10133', '10453', '10480', '10706', '10127', '12163'],
 
                 // category或者search
                 // 如果为category, 点击后将进入分类漫画页面, 使用下方的`categoryComics`加载漫画
@@ -203,11 +129,11 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 itemType: "category",
             },
             {
-                name: "更新",
+                name: "状态",
                 type: "fixed",
-                categories: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+                categories: ["全部", "连载中", "已完结"],
                 itemType: "category",
-                categoryParams: ['1', '2', '3', '4', '5', '6', '7']
+                categoryParams: ['', '1', '2']
             }
         ],
         enableRankingPage: false,
@@ -219,12 +145,12 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             category = encodeURIComponent(category)
             let url = ""
             if (param !== undefined && param !== null) {
-                url = `https://ymcdnyfqdapp.ikmmh.com/update/${param}.html`
+                url = `${this.baseUrl}/update/${param}.html`
             } else {
-                url = `https://ymcdnyfqdapp.ikmmh.com/booklists/${options[1]}/${category}/${options[0]}/${page}.html`
+                url = `${this.baseUrl}/booklists/${options[1]}/${category}/${options[0]}/${page}.html`
             }
             let res = await Network.get(url, {
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+                "User-Agent": this.webUA
             })
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
@@ -236,7 +162,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 let cover = element.querySelector("img").attributes["src"]
                 let tags = []
                 let link = element.querySelector("a").attributes["href"]
-                link = "https://ymcdnyfqdapp.ikmmh.com" + link
+                link = "${this.baseUrl}" + link
                 let updateInfo = element.querySelector("span.chapter").text
                 return {
                     title: title,
@@ -292,30 +218,29 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
     /// 搜索
     search = {
         load: async (keyword, options, page) => {
-            let res = await Network.get(`https://ymcdnyfqdapp.ikmmh.com/search?searchkey=${encodeURIComponent(keyword)}`, {
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+       
+            let res = await Network.get(`${this.baseUrl}/search?searchString=${encodeURIComponent(keyword)}`, {
+                "User-Agent": this.webUA
             })
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
             }
             let document = new HtmlDocument(res.body)
 
-            function parseComic(element) {
-                let title = element.querySelector("p.title").text
-                let cover = element.querySelector("img").attributes["src"]
-                let link = element.querySelector("a").attributes["href"]
-                link = "https://ymcdnyfqdapp.ikmmh.com" + link
-                let updateInfo = element.querySelector("span.chapter").text
+            function parseComic(e) {
+                let url = e.querySelector("a").attributes['href']
+                let id = url.split("/").pop()
+                let title = e.querySelector("h1 > a").text.trim()
+                let cover = e.querySelector("a.fed-list-pics").attributes["data-original"]
                 return {
+                    id: id,
                     title: title,
                     cover: cover,
-                    id: link,
-                    subTitle: updateInfo
-                };
+                }
             }
 
             return {
-                comics: document.querySelectorAll("ul.comic-sort > li").map(parseComic),
+                comics: document.querySelectorAll("div.fed-part-layout > dl").map(parseComic),
                 maxPage: 1
             }
         },
@@ -333,14 +258,14 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let id = comicId.split("/")[4]
             if (isAdding) {
                 let comicInfoRes = await Network.get(comicId, {
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+                    "User-Agent": this.webUA
                 });
                 if (comicInfoRes.status !== 200) {
                     throw "Invalid status code: " + res.status
                 }
                 let document = new HtmlDocument(comicInfoRes.body)
                 let name = document.querySelector("h1").text;
-                let res = await Network.post("https://ymcdnyfqdapp.ikmmh.com/api/user/bookcase/add", {
+                let res = await Network.post("${this.baseUrl}/api/user/bookcase/add", {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }, `articleid=${id}&articlename=${name}`)
                 if (res.status !== 200) {
@@ -355,9 +280,9 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                     throw json["msg"].toString()
                 }
             } else {
-                let res = await Network.post("https://ymcdnyfqdapp.ikmmh.com/api/user/bookcase/del", {
+                let res = await Network.post("${this.baseUrl}/api/user/bookcase/del", {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+                    "User-Agent": this.webUA
                 }, `articleid=${id}`)
                 if (res.status !== 200) {
                     error("Invalid status code: " + res.status)
@@ -375,9 +300,9 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
         },
         /// 加载漫画
         loadComics: async (page, folder) => {
-            let res = await Network.post("https://ymcdnyfqdapp.ikmmh.com/api/user/bookcase/ajax", {
+            let res = await Network.post("${this.baseUrl}/api/user/bookcase/ajax", {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+                "User-Agent": this.webUA
             }, `page=${page}`)
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
@@ -394,7 +319,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                     title: e["name"],
                     subTitle: e["author"],
                     cover: e["cover"],
-                    id: "https://ymcdnyfqdapp.ikmmh.com" + e["info_url"]
+                    id: "${this.baseUrl}" + e["info_url"]
                 }
             })
             let maxPage = json["end"]
@@ -410,40 +335,34 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
         // 加载漫画信息
         loadInfo: async (id) => {
             let res = await Network.get(id, {
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+                "User-Agent": this.webUA
             })
             if (res.status !== 200) {
                 throw "Invalid status code: " + res.status
             }
             let document = new HtmlDocument(res.body)
-            let title = document.querySelector("div.book-hero__detail > .title").text
-            let cover = document.querySelector('meta[property="og:image"]').attributes["content"]
-            let author = document.querySelector('meta[property="og:cartoon:author"]').attributes["content"]
-            let tags = document.querySelectorAll("div.tags > a").map(e => e.text.trim())
-            let description = document.querySelector(".book-container__detail").text
-            let updateTime = document.querySelector('meta[property="og:cartoon:update_time"]').attributes["content"]
 
-             function extractIdFromUrl(url) {
-                 // 使用正则表达式直接从URL字符串中匹配最后一个数字序列
-                const match = url.match(/\/(\d+)\/?$/);
-                // 如果匹配成功，则返回匹配到的数字，否则返回null
-                return match ? match[1] : null;
-            }
-            const zpid = extractIdFromUrl(id);
-            
-            let chapterRes = await Network.get(`https://ymcdnyfqdapp.ikmmh.com/api/comic/zyz/chapters?ph=1&tempid=3&zpid=${zpid}&page=0&line=48&orderby=asc`, {
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
-            })
+            let dataInfo =  document.querySelector('dl.fed-deta-info')
+            let title = dataInfo.querySelector("h1").text.trim()
+            let cover = dataInfo.querySelector("a.fed-list-pics").attributes["data-original"]
+            let description = dataInfo.querySelector("dd > li > div.fed-part-esan").text.trim()
+
+            let allLi = dataInfo.querySelectorAll("dd.fed-deta-content > li")
+            let author = allLi[2].querySelector('a').text.trim()
+            let updateTime = allLi[3].querySelector('a').text.trim()
+            let tags = allLi[5].querySelectorAll("a").map(e => e.text.trim())
+
             let eps = {}
-            let chaData = JSON.parse(chapterRes.body)
-            chaData.length.forEach((element) => {
-                eps[element.url] = element.name
+            let chaData = document.querySelectorAll("div.all_data_list > li")
+            chaData.forEach((element) => {
+                let cha = element.querySelector('a')
+                eps[cha.attributes["href"]] = cha.text.trim()
             })
-            let comics = document.querySelectorAll("div.module-guessu > div.item").map(element => {
-                let title = element.querySelector("div.title").text
-                let cover = element.querySelector("div.lazy").attributes["data-src"]
-                let link = element.querySelector("a").attributes["href"]
-                link = "https://ymcdnyfqdapp.ikmmh.com" + link
+            
+            let comics = document.querySelectorAll(".fed-part-layout > ul.fed-list-info > li").map(element => {
+                let title = element.querySelector("a.fed-list-title").text
+                let cover = element.querySelector("a.fed-list-pics").attributes["data-original"]
+                let link = element.querySelector("a.fed-list-title").attributes["href"]
                 return {
                     title: title,
                     cover: cover,
@@ -469,10 +388,10 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 comicId = comicId.split("/")[4]
             }
             let res = await Network.get(
-                `https://ymcdnyfqdapp.ikmmh.com${epId}`,
+                `${this.baseUrl}${epId}`,
                 {
-                    "Referer": `https://ymcdnyfqdapp.ikmmh.com/book/${comicId}`,
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+                    "Referer": `${this.baseUrl}/${comicId}`,
+                    "User-Agent": this.webUA
                 }
             )
             if (res.status !== 200) {
@@ -480,10 +399,10 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             }
             let document = new HtmlDocument(res.body)
             return {
-                images: document.querySelectorAll("img.lazy").map(e => e.attributes["data-src"])
+                images: document.querySelectorAll('div.mh_mangalist > div.mh_comicpic > img').map(e => e.attributes["src"].replace('blob:', ''))
             }
         },
         /// 警告: 这是历史遗留问题, 对于新的漫画源, 不应当使用此字段, 在选取漫画id时, 不应当出现特殊字符
-        matchBriefIdRegex: "https://ymcdnyfqdapp.ikmmh.com/book/(\\d+)/"
+        matchBriefIdRegex: "${this.baseUrl}/book/(\\d+)/"
     }
 }
