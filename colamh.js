@@ -340,7 +340,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
             let document = new HtmlDocument(res.body)
 
             let title = document.querySelector('meta[property="og:comic:book_name"]').attributes["content"]
-            let tags = document.querySelectorAll('meta[property="og:comic:category"]').attributes["content"].split(" ")
+            let tags = document.querySelector('meta[property="og:comic:category"]').attributes["content"].split(" ")
             let updateTime = document.querySelector('meta[property="og:comic:update_time"]').attributes["content"]
             let description = document.querySelector('meta[property="og:description"]').attributes["content"]
         
