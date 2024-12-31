@@ -383,7 +383,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
         },
         // 获取章节图片
         loadEp: async (comicId, epId) => {
-            // console.log(mh_info,'mh_info');
+            console.log(mh_info)
             // console.log(comicId');
             // console.log(epId);
             if (comicId.includes("https://")) {
