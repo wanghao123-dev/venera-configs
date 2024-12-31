@@ -384,8 +384,8 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
         // 获取章节图片
         loadEp: async (comicId, epId) => {
             // console.log(mh_info,'mh_info');
-            console.log(comicId');
-            console.log(epId);
+            // console.log(comicId');
+            // console.log(epId);
             if (comicId.includes("https://")) {
                 comicId = comicId.split("/")[4]
             }
@@ -400,7 +400,7 @@ class NewComicSource extends ComicSource {  // 首行必须为class...
                 throw "Invalid status code: " + res.status
             }
             let document = new HtmlDocument(res.body)
-            console.log(mh_info,'mh_info');
+            // console.log(mh_info,'mh_info');
             return {
                 images: document.querySelectorAll('div.mh_mangalist > div.mh_comicpic > img').map(e => e.attributes["src"].replace('blob:', ''))
             }
